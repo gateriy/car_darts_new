@@ -97,11 +97,25 @@ public:
 
     //создание блока данных пути
     std::pair<std::string, std::string> CreateMessage(const std::string& message_id) {
-
-        // bool blok_oupen = false;
         std::pair<std::string, std::string> mes_text_audio{ {""},{""} };
 
-        int counter_x_{ 0 }; //счетчик
+        if (!line_file_.empty()) {
+
+            auto it = std::find(line_file_.begin(), line_file_.end(), message_id);//поиск итератора по значению
+
+            if (line_file_.end() != it) {
+
+               // int x = it - line_file_.begin();//определение индекса элемента через итераторы                               
+               // std::cout << *it << "---" << x << "---" << *line_file_.begin() << std::endl; пример для пнимания работы итераторов
+  
+                return mes_text_audio = { { *(it + 1)},{ *(it + 2)} };//прямое обращение через раименованный итератор
+            }
+            else {
+                return mes_text_audio = { {"н/д"},{"н/д"} };
+            }
+        }
+
+       /* int counter_x_{0}; //счетчик
 
         if (!line_file_.empty()) {
             for (const auto& text_line : line_file_) {
@@ -116,6 +130,7 @@ public:
         }else return mes_text_audio = { {"н/д"},{"н/д"}};
 
         return mes_text_audio = { {"н/д"},{"н/д"} };
+        */
     }
 
 private:
